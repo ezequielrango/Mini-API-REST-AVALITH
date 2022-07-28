@@ -12,12 +12,13 @@ datasource db {
 
 model User {
   id Int @id @default(autoincrement()) // @id para especificar PK
-  name String // Por defecto coloca 255
+  name String // Por defecto coloca 191
   email String @unique 
   age Int
   createdAt DateTime @default(now())
   country String
   posts Post[]
+  role Role @default(USER)
 }
 
 model Post {
@@ -36,3 +37,8 @@ model Category {
   name String
   posts Post[] // muchos post
 } 
+
+enum Role {
+  USER
+  ADMIN
+}
