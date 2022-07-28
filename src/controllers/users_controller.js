@@ -1,6 +1,9 @@
+const userService = require('../services/users_service');
+
 const getAllUser = (req, res) => {
     try {
-        res.status(200).json('ok')
+        const allUsers = userService.getAllUser();
+        res.status(200).json({status : 'ok', data: allUsers})
     } catch (err) {
         res.status(500).json('Internal server error')
     };
@@ -15,9 +18,8 @@ const getByIdUser = (req,res) => {
     };
 };
 
-const createUser = (req,res) => {
+const createUser = async (req,res) => {
     try {
-        const {id} = req.params;
         const {name , age, email, country} = req.body;
 
         if (!name || !age || !email || !country ) {
@@ -26,7 +28,14 @@ const createUser = (req,res) => {
                 msgError: 'You must fill all the fields'
             })
         }else{
-            res.status(201).json(`Created user: ${name}`);
+            const newUser = {
+                name,
+                age,
+                email,
+                country
+            };
+            const createdUser = await userService.createUser(newUser);
+            res.status(201).json(createdUser );
         }
     } catch (err) {
         res.status(500).json('Internal server error')
