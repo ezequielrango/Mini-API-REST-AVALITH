@@ -9,12 +9,15 @@ const getAllUser = (req, res) => {
     };
 };
 
-const getByIdUser = (req,res) => {
+const getByIdUser = async (req,res) => {
     try {
-        const {id} = req.params;
-        res.status(200).json(Number(id))
+        const {id} =  req.params;
+        const user = await userService.getByIdUser(id);
+            res.status(200).json(user);
+            
     } catch (err) {
-        res.status(500).json('Internal server error')
+        console.log(err);
+        res.status(500).json(err)
     };
 };
 
