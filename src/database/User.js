@@ -11,6 +11,20 @@ const getAllUser = async (req,res) => {
 
 };
 
+const getByIdUser = async (id) => {
+    try {
+        const user = await prisma.user.findUniqueOrThrow({
+            where: {
+                id : id
+            }
+        })
+        console.log(typeof id);
+        return user;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 const createUser = async (newUser) => {
     try {
         const createNewUser = await prisma.user.create({
@@ -24,5 +38,6 @@ const createUser = async (newUser) => {
 }
 module.exports = {
     getAllUser,
+    getByIdUser,
     createUser
 };
