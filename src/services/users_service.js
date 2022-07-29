@@ -27,11 +27,12 @@ const createUser = (newUser) => {
     };
 };
 
-const updateUser = (req ,res) => {
+const updateUser = (id,updateData) => {
     try {
-        
+        const updatedUser = User.updateUser(Number(id),updateData);
+        return updatedUser;
     } catch (err) {
-        
+        res.status(500).json('Internal Server Error');
     };
 };
 

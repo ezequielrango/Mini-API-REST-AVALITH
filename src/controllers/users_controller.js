@@ -45,14 +45,25 @@ const createUser = async (req,res) => {
     };
 };
 
-const updateUser = (req,res) => {
+const updateUser = async (req,res) => {
     try {
         const {id} = req.params;
-        const {name , age, email, country} = req.body;
-        // servicio para actualizar
-        res.status(201).json('updated')
+        const {body} = req;
+        if (!body) {
+            res.status(400).json({
+                status : 400,
+                msg: 'You must fill all the fields'
+            });
+        }else{
+            const updatedUser = await userService.updateUser(id,body);
+            res.status(201).json({
+                status : 201,
+                data : updatedUser
+            });
+        };
     } catch (err) {
-        res.status(500).json('Internal server error')
+        console.log(err);
+        res.status(500).json('Internal server error     CONTROLLER')
     };
 };
 

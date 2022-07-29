@@ -23,7 +23,7 @@ const getByIdUser = async (id) => {
     } catch (err) {
         console.log(err);
     }
-}
+};
 
 const createUser = async (newUser) => {
     try {
@@ -35,9 +35,22 @@ const createUser = async (newUser) => {
     } catch (err) {
         res.status(500).json('Internal Server Error')
     }
+};
+
+const updateUser = async (id,updatedUser) => {
+    const user = await prisma.user.update({
+        where : {
+            id : id,
+        },
+        data: {
+            updatedUser
+        }
+    });
+    return user;
 }
 module.exports = {
     getAllUser,
     getByIdUser,
-    createUser
+    createUser,
+    updateUser
 };
