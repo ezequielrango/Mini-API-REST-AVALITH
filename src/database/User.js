@@ -37,20 +37,32 @@ const createUser = async (newUser) => {
     }
 };
 
-const updateUser = async (id,updatedUser) => {
-    const user = await prisma.user.update({
-        where : {
-            id : id,
-        },
-        data: {
-            updatedUser
-        }
-    });
-    return user;
+const updateUser = async (id,dataUser) => {
+    try {
+        const updatedUser = await prisma.user.update({
+            where : { id },
+            data : dataUser
+        });
+        return updatedUser;       
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+const deleteUser = async (id) => {
+    try {
+        const deletedUser = prisma.user.delete({
+            where : {id}
+        })
+        return deletedUser;
+    } catch (err) {
+        console.log(err);
+    }
 }
 module.exports = {
     getAllUser,
     getByIdUser,
     createUser,
-    updateUser
+    updateUser,
+    deleteUser
 };

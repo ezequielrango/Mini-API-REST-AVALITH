@@ -1,8 +1,8 @@
 const userService = require('../services/users_service');
 
-const getAllUser = (req, res) => {
+const getAllUser = async (req, res) => {
     try {
-        const allUsers = userService.getAllUser();
+        const allUsers = await userService.getAllUser();
         res.status(200).json({status : 'ok', data: allUsers})
     } catch (err) {
         res.status(500).json('Internal server error')
@@ -13,6 +13,12 @@ const getByIdUser = async (req,res) => {
     try {
         const {id} =  req.params;
         const user = await userService.getByIdUser(id);
+        if (!user) {
+            res.status(404).json({
+                status : 404,
+                msg: 'Resource Not found or doesnt exists'
+            });    
+        }
             res.status(200).json(user);
             
     } catch (err) {
@@ -45,34 +51,40 @@ const createUser = async (req,res) => {
     };
 };
 
-const updateUser = async (req,res) => {
+const updateUser = async (req ,res ) => {
     try {
         const {id} = req.params;
-        const {body} = req;
-        if (!body) {
+        const {name , age, email, country} = req.body;
+        if (!name || !age || !email || !country) {
             res.status(400).json({
                 status : 400,
                 msg: 'You must fill all the fields'
-            });
+            });            
         }else{
-            const updatedUser = await userService.updateUser(id,body);
-            res.status(201).json({
-                status : 201,
-                data : updatedUser
-            });
-        };
+            const dataUser = {
+                name,
+                age,
+                email,
+                country  
+            }
+            const updatedUser = userService.updateUser(id,dataUser)
+            res.status(201).json({ data : updatedUser })
+        }
     } catch (err) {
-        console.log(err);
-        res.status(500).json('Internal server error     CONTROLLER')
-    };
-};
+        res.status(500).json('Internal server error')
+    }
+}
 
-const deleteUser = (req,res) => {
+const deleteUser = async (req,res) => {
     try {
         const {id} = req.params; 
-        // servicio para eliminar
-        res.status(200).json('updated')
+        const deletedUser = await userService.deleteUser(id)
+            res.status(201).json({
+                status : 201,
+                msg : 'Deleted successfully'
+            });
     } catch (err) {
+        console.log(err);
         res.status(500).json('Internal server error')
     }
 }
