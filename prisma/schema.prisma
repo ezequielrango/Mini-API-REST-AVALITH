@@ -9,3 +9,36 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id Int @id @default(autoincrement()) // @id para especificar PK
+  name String // Por defecto coloca 191
+  email String @unique 
+  age Int
+  createdAt DateTime @default(now())
+  country String
+  posts Post[]
+  role Role @default(USER)
+}
+
+model Post {
+  id Int @id @default(autoincrement())
+  title String? // puede ser null
+  content String 
+  createdAt DateTime @default(now())
+  published Boolean @default(false)
+  categories Category[] //muchas categorias
+  authorId Int
+  author User @relation(fields:[authorId], references: [id]) // relacion N:1
+}
+ // N:M , 1 categoria tiene muchos post , 1 post tiene muchas categorias
+model Category {
+  id Int @id @default(autoincrement())
+  name String
+  posts Post[] // muchos post
+} 
+
+enum Role {
+  USER
+  ADMIN
+}
