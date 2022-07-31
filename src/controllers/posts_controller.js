@@ -1,7 +1,7 @@
-const postServices = require('../services/posts_services');
+const postServices = require('../services/posts_service');
 
 
-const getAll = async (res ,res) => {
+const getAll = async (req ,res) => {
     const allPosts = await postServices.allPosts();
     try {
         if (allPosts.length === 0) {
