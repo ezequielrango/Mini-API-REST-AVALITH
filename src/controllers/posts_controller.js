@@ -2,7 +2,7 @@ const postServices = require('../services/posts_service');
 
 
 const getAll = async (req ,res) => {
-    const allPosts = await postServices.allPosts();
+    const allPosts = await postServices.getAll();
     try {
         if (allPosts.length === 0) {
             res.status(404).json({
