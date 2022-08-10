@@ -10,6 +10,15 @@ const getAll = (req ,res) => {
     };
 };
 
+const getById = (id) => {
+    try {
+        const getPost = Post.getById(Number(id))
+        return getPost;
+    } catch (error) {
+        console.log(error);
+    }
+}
 module.exports = {
     getAll,
+    getById
 }
