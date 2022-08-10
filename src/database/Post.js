@@ -10,6 +10,18 @@ const getAll = async(req, res) => {
     };
 };
 
+const getById = async (id) => {
+    try {
+        const getPost = await prisma.post.findUnique({
+            where : {id}
+        });
+        return getPost;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
-    getAll
+    getAll,
+    getById
 };
