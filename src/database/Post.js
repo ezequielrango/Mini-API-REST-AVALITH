@@ -19,9 +19,21 @@ const getById = async (id) => {
     } catch (error) {
         console.log(error);
     }
-}
+};
+
+const create = async (newPost) => {
+    try {
+        const createdPost = await prisma.post.create({
+            data : newPost
+        });
+        return createdPost;
+    } catch (error) {
+        console.log(error);
+    };
+};
 
 module.exports = {
     getAll,
-    getById
+    getById,
+    create
 };
