@@ -17,8 +17,18 @@ const getById = (id) => {
     } catch (error) {
         console.log(error);
     }
+};
+
+const create = (newUser) => {
+    try {
+        const createPost = Post.create(newUser);
+        return createPost
+    } catch (error) {
+        console.log(error);
+    }
 }
 module.exports = {
     getAll,
-    getById
+    getById,
+    create
 }
