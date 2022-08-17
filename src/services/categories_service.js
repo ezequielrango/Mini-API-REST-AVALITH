@@ -1,10 +1,23 @@
 const Category = require('../database/Category');
 
 const getAll = (req,res) => {
-    const categories = Category.getAll();
-    return categories;
+    try {
+        const categories = Category.getAll();
+        return categories;
+    } catch (error) {
+        console.log(error);   
+    }
 }
 
+const getById = (id) => {
+    try {
+        const category = Category.getById(Number(id));
+        return category;   
+    } catch (error) {
+        console.log(error);   
+    }
+}
 module.exports = {
-    getAll
+    getAll,
+    getById
 }
