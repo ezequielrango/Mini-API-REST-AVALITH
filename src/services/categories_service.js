@@ -17,7 +17,17 @@ const getById = (id) => {
         console.log(error);   
     }
 }
+
+const create = (newCategory) => {
+    try {
+        const createdCategory = Category.create(newCategory);
+        return createdCategory;
+    } catch (error) {
+        console.log(error);
+    }
+} 
 module.exports = {
     getAll,
-    getById
+    getById,
+    create
 }
