@@ -10,6 +10,30 @@ const getAll = async (req,res) => {
     }
 }
 
+const getById = async (id) => {
+    try {
+        const category = await prisma.category.findUniqueOrThrow({
+            where : {id}
+        })
+        return category;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const create = async (newCategory) => {
+    try {
+        const createdCategory = await prisma.category.create({
+            data : newCategory
+        })
+        return createdCategory;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
-    getAll
+    getAll,
+    getById,
+    create
 }
